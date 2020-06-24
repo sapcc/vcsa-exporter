@@ -13,7 +13,7 @@ class VmonCollector(BaseCollector):
         for vc in self.vcenter.vcenter_list:
             g = GaugeMetricFamily('vcsa_service_status',
                                   'Status of vCSA Services',
-                                   labels=['service', 'health', 'state'])
+                                   labels=['service', 'health', 'state', 'vccluster'])
             
             rest_yaml = self.read_rest_yaml()
             
@@ -35,6 +35,6 @@ class VmonCollector(BaseCollector):
                 metric_value = 1
                 if health != 'HEALTHY':
                     metric_value = 0
-                g.add_metric(labels=[service_name, health, state], value=metric_value)
+                g.add_metric(labels=[service_name, health, state, vc], value=metric_value)
 
             yield g

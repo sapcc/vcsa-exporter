@@ -10,4 +10,4 @@ RUN pip3 install --upgrade pip
 ADD . vcsa-exporter/
 RUN pip3 install --upgrade -r vcsa-exporter/requirements.txt
 
-WORKDIR vcsa-exporter 
+WORKDIR vcsa-exporter
