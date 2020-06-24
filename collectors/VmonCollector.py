@@ -2,7 +2,7 @@ from prometheus_client.core import GaugeMetricFamily
 from BaseCollector import BaseCollector
 from modules.Connection import Connection
 
-class VcsaCollector(BaseCollector):
+class VmonCollector(BaseCollector):
     def __init__(self, vcenter):
         self.vcenter = vcenter
 
