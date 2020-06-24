@@ -9,8 +9,8 @@ DOCKER := docker
 
 .PHONY: build
 build: 
-	#$(DOCKER) build -t $(IMAGE):$(VERSION) --no-cache --rm .
-	$(DOCKER) build -t $(IMAGE):$(VERSION)  .
+	$(DOCKER) build -t $(IMAGE):$(VERSION) --no-cache --rm .
+	#$(DOCKER) build -t $(IMAGE):$(VERSION)  .
 
 .PHONY: push 
 push: 
