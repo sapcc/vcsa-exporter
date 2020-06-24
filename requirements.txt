@@ -1,0 +1,5 @@
+urllib3
+prometheus_client
+requests
+pyyaml
+master_password
