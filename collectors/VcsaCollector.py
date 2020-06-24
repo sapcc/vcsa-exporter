@@ -1,8 +1,8 @@
 from prometheus_client.core import GaugeMetricFamily
+from BaseCollector import BaseCollector
 from modules.Connection import Connection
-import yaml
 
-class VcsaCollector:
+class VcsaCollector(BaseCollector):
     def __init__(self, vcenter):
         self.vcenter = vcenter
 
@@ -15,8 +15,7 @@ class VcsaCollector:
                                   'Status of vCSA Services',
                                    labels=['service', 'health', 'state'])
             
-            with open('./rest.yaml') as yaml_file:
-                rest_yaml = yaml.safe_load(yaml_file)
+            rest_yaml = self.read_rest_yaml()
             
             api_target = rest_yaml['vmonservice']['api_target']
             session_id = Connection.login(vc, self.vcenter.user, self.vcenter.generate_pw(vc))
