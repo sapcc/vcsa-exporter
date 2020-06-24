@@ -1,5 +1,5 @@
 SHELL       := /bin/sh
-IMAGE       := hub.global.cloud.sap/monsoon/vcsa-exporter
+IMAGE       := vcsa-exporter
 VERSION     := 0.1
 
 ### Executables
