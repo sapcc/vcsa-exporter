@@ -17,11 +17,7 @@ def parse_params():
     parser.add_option("-c", "--config", help="path to rest config", action="store", dest="config")
     parser.add_option("-m", "--master-password", help="master password to decrypt mpw", action="store", dest="master_password")
     parser.add_option("-a", "--atlas", help="path to atlas config", action="store", dest="atlas")
-
-    #just for now for single instance testing
-    # parser.add_option("-p", "--password", help="password for log in to vCenter api ", action="store", dest="password")
-    parser.add_option("-u", "--user", help="user@domain to log in to vCenter api", action="store", dest="user")
-    parser.add_option("-v", "--vc", help="vcenter to log in", action="store", dest="vcenter")
+    parser.add_option("-u", "--user", help="user used with master password", action="store", dest="user")
 
     (options, args) = parser.parse_args()
     if options.debug:
