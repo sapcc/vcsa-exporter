@@ -18,11 +18,14 @@ class VmonCollector(BaseCollector):
             rest_yaml = self.read_rest_yaml()
             
             api_target = rest_yaml['vmonservice']['api_target']
+
+            #TODO: move session handling to base class. implement reuse of sessions
             session_id = Connection.login(vc, self.vcenter.user, self.vcenter.generate_pw(vc))
             if not session_id:
                 print("skipping vc", vc, ", login not possible")
                 continue
             fetched_data = Connection.get_request(vc, api_target, session_id)
+            Connection.logout(vc,session_id)
 
             services = dict()
             for service in fetched_data['value']:

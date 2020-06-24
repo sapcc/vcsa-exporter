@@ -8,7 +8,7 @@ class Connection:
     def login(target, user, password):
         disable_warnings(exceptions.InsecureRequestWarning)
         if os.environ['DEBUG'] == "1":
-            print("logging in", target)
+            print("loggin", target)
         url = "https://" + target + "/rest/com/vmware/cis/session" 
         try:
             response = requests.post(url, auth=(user, password), verify=False)
@@ -24,7 +24,7 @@ class Connection:
     def get_request(target, key, session_id):
         disable_warnings(exceptions.InsecureRequestWarning)
         if os.environ['DEBUG'] == "1":
-            print("issuing request",target, key)
+            print("request",target, key)
         url = "https://" + target + "/rest/" + key 
         try:
             response = requests.get(url, verify=False,
@@ -35,3 +35,19 @@ class Connection:
             return response.json()
         else:
             print("Problem with get return of", target, ":", response.text)
+
+    # going to be used until reuse of session_id is in place
+    def logout(target, session_id):
+        disable_warnings(exceptions.InsecureRequestWarning)
+        if os.environ['DEBUG'] == "1":
+            print("logout",target)
+        url = "https://" + target + "/rest/com/vmware/cis/session"
+        try:
+            response = requests.delete(url, verify=False,
+                                    headers={"vmware-api-session-id": session_id})
+        except Exception as e:
+            print("Problem deleting session for", target, ":", str(e))
+        if response.status_code == 200:
+            return
+        else:
+            print("Problem with getting return of", target, ":", response.text)
