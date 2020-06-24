@@ -1,6 +1,4 @@
-# import sys
-# sys.path.append('.')
-
+#!/usr/bin/python3
 import time
 from optparse import OptionParser
 from prometheus_client import start_http_server
