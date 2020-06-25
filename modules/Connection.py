@@ -8,7 +8,7 @@ class Connection:
     def login(target, user, password):
         disable_warnings(exceptions.InsecureRequestWarning)
         if os.environ['DEBUG'] == "1":
-            print("loggin", target)
+            print("login", target)
         url = "https://" + target + "/rest/com/vmware/cis/session" 
         try:
             response = requests.post(url, auth=(user, password), verify=False)
