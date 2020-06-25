@@ -35,6 +35,7 @@ class Connection:
             return response.json()
         else:
             print("Problem with get return of", target, ":", response.text)
+            return False
 
     # going to be used until reuse of session_id is in place
     def logout(target, session_id):

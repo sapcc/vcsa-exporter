@@ -26,6 +26,9 @@ class VmonCollector(BaseCollector):
                 continue
             fetched_data = Connection.get_request(vc, api_target, session_id)
             Connection.logout(vc,session_id)
+            if not fetched_data:
+                print("skipping vc", vc, "fetched data did not return anything")
+                continue
 
             services = dict()
             for service in fetched_data['value']:
