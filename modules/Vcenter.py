@@ -2,12 +2,13 @@ import json
 import master_password
 
 class Vcenter:
-    def __init__(self, atlasfile, mpw, user):
+    def __init__(self, atlasfile, mpw, user, password=None):
         self.vcenter_list = list()
         self.vc_pws = dict()
         self.atlasfile = atlasfile
         self.user = user
         self.mpw = mpw
+        self.pw = password
         self.pw_handle = self.generate_pw_handle()
 
     def get_vcs_from_atlas(self):
@@ -24,4 +25,6 @@ class Vcenter:
         return master_password.MPW(self.user, self.mpw)
 
     def generate_pw(self, url):
+        if self.pw:
+            return self.pw
         return self.pw_handle.password(url)

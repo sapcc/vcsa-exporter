@@ -16,6 +16,7 @@ def parse_params():
     parser.add_option("-m", "--master-password", help="master password to decrypt mpw", action="store", dest="master_password")
     parser.add_option("-a", "--atlas", help="path to atlas config", action="store", dest="atlas")
     parser.add_option("-u", "--user", help="user used with master password", action="store", dest="user")
+    parser.add_option("-p", "--password", help="specify password to log in", action="store", dest="password")
 
     (options, args) = parser.parse_args()
     if options.debug:
@@ -23,8 +24,6 @@ def parse_params():
         os.environ['DEBUG'] = "1"
     else:
         os.environ['DEBUG'] = "0"
-
-
     return options
 
 
@@ -34,8 +33,9 @@ def run_prometheus_server(port, vcenter):
     while True:
         time.sleep(1)
 
+
 if __name__ == '__main__':
     options = parse_params()
-    vcenter = Vcenter(options.atlas, options.master_password, options.user)
+    vcenter = Vcenter(options.atlas, options.master_password, options.user, password = options.password)
     vcenter.get_vcs_from_atlas()
     run_prometheus_server(options.port, vcenter)
