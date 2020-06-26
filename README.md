@@ -18,7 +18,7 @@ make
 docker run -it vcsa-exporter:0.1 sh
 ```
 
-We are using [atlas](https://github.com/sapcc/atlas) to have the vcenter.json served automatically; built from netbox. However, you can assemlbe the file on your own too:
+We are using [atlas](https://github.com/sapcc/atlas) to have the `vcenter.json` served automatically; built from netbox. However, you can assemlbe the file on your own too:
 
 ```json
 [
