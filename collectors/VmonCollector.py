@@ -6,19 +6,17 @@ from modules.Connection import Connection
 class VmonCollector(BaseCollector):
     def __init__(self, vcenter):
         self.vcenter = vcenter
-
-    def describe(self):
-        yield GaugeMetricFamily('vcsa_service_status', 'Health Status of vCSA Services')
-
-    def collect(self):
-
-        health_states = {
+        self.health_states = {
             "HEALTHY": 3,
             "HEALTHY_WITH_WARNINGS": 2,
             "DEGRADED": 1,
             "STOPPED": 0
         }
 
+    def describe(self):
+        yield GaugeMetricFamily('vcsa_service_status', 'Health Status of vCSA Services')
+
+    def collect(self):
         for vc in self.vcenter.vcenter_list:
             g = GaugeMetricFamily('vcsa_service_status',
                                   'Status of vCSA Services',
@@ -44,10 +42,10 @@ class VmonCollector(BaseCollector):
                 service_name = service['key']
                 state = service['value']['state']
                 if state == "STOPPED":
-                    health_state = "STOPPED"
+                    service_health = "STOPPED"
                 else:
-                    health_state = service['value']['health']
+                    service_health = service['value']['health']
 
-                g.add_metric(labels=[service_name, vc], value=health_states[health_state])
+                g.add_metric(labels=[service_name, vc], value=self.health_states[service_health])
 
             yield g
