@@ -31,6 +31,7 @@ class Connection:
                                     headers={"vmware-api-session-id": session_id})
         except Exception as e:
             print("Problem handling", key, "for", target, ":", str(e))
+            return False
         if response.status_code == 200:
             return response.json()
         else:
@@ -48,6 +49,7 @@ class Connection:
                                     headers={"vmware-api-session-id": session_id})
         except Exception as e:
             print("Problem deleting session for", target, ":", str(e))
+            return False
         if response.status_code == 200:
             return
         else:

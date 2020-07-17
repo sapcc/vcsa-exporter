@@ -9,7 +9,8 @@ class Vcenter:
         self.user = user
         self.mpw = mpw
         self.pw = password
-        self.pw_handle = self.generate_pw_handle()
+        if not password:
+            self.pw_handle = self.generate_pw_handle()
 
     def get_vcs_from_atlas(self):
         with open(self.atlasfile) as json_file:
