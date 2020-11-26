@@ -38,7 +38,24 @@ class Connection:
             print("Problem with get return of", target, ":", response.text)
             return False
 
-    # going to be used until reuse of session_id is in place
+    def post_request(target, key, post, session_id):
+        disable_warnings(exceptions.InsecureRequestWarning)
+        if os.environ['DEBUG'] == "1":
+            print("request", target, key)
+        url = "https://" + target + "/rest/" + key + '?' + post
+        try:
+            response = requests.post(url, verify=False,
+                                    headers={"vmware-api-session-id": session_id})
+        except Exception as e:
+            print("Problem handling", key, "for", target, ":", str(e))
+            return False
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Problem with post return of", target, ":", response.text)
+            return False
+
+        # going to be used until reuse of session_id is in place
     def logout(target, session_id):
         disable_warnings(exceptions.InsecureRequestWarning)
         if os.environ['DEBUG'] == "1":

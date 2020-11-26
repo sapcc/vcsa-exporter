@@ -6,6 +6,7 @@ from prometheus_client.core import REGISTRY
 from collectors.VmonCollector import VmonCollector
 from modules.Vcenter import Vcenter
 import os
+from collectors.LoggingCollector import LoggingCollector
 
 def parse_params():
     parser = OptionParser()
@@ -30,6 +31,7 @@ def parse_params():
 def run_prometheus_server(port, vcenter):
     start_http_server(int(port))
     REGISTRY.register(VmonCollector(vcenter))
+    REGISTRY.register(LoggingCollector(vcenter))
     while True:
         time.sleep(1)
 
