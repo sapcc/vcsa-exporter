@@ -18,7 +18,7 @@ class LoggingCollector(BaseCollector):
     def collect(self):
         for vc in self.vcenter.vcenter_list:
             g = GaugeMetricFamily('vcsa_logging_status',
-                                  'Checks the log forwarding of vCSA.',
+                                  'Checks the log forwarding of vCSA. Down: 0 Up: 1 Unknown: 2',
                                   labels=['loghost', 'vccluster'])
 
             rest_yaml = self.read_rest_yaml()

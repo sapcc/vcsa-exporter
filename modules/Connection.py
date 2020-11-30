@@ -4,6 +4,7 @@ import requests
 import json
 import os
 
+
 class Connection:
     def login(target, user, password):
         disable_warnings(exceptions.InsecureRequestWarning)
@@ -38,11 +39,11 @@ class Connection:
             print("Problem with get return of", target, ":", response.text)
             return False
 
-    def post_request(target, key, post, session_id):
+    def post_request(target, key, data, session_id):
         disable_warnings(exceptions.InsecureRequestWarning)
         if os.environ['DEBUG'] == "1":
             print("request", target, key)
-        url = "https://" + target + "/rest/" + key + '?' + post
+        url = "https://" + target + "/rest/" + key + '?' + data
         try:
             response = requests.post(url, verify=False,
                                     headers={"vmware-api-session-id": session_id})
@@ -55,7 +56,7 @@ class Connection:
             print("Problem with post return of", target, ":", response.text)
             return False
 
-        # going to be used until reuse of session_id is in place
+    # going to be used until reuse of session_id is in place
     def logout(target, session_id):
         disable_warnings(exceptions.InsecureRequestWarning)
         if os.environ['DEBUG'] == "1":

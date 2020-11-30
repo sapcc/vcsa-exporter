@@ -1,7 +1,11 @@
 # vcsa-exporter
 
 This is an exporter using [vCenter Server Appliance (Management) API](https://code.vmware.com/apis/60/vcenter-server-appliance-management) via REST. 
-So far, there is just one collector for `vmon/service`. Idea is, to have different collectors for the different REST paths, since their output is very different (and therefore the parsing).
+Idea is, to have different collectors for the different REST paths, since their output is very different (and therefore the parsing).
+
+Current collectors:
+* `vmon/service`: vCSA service health states.
+* `logging/forwarding`: Checks the log forwarding to syslog hosts.
 
 ## Running the exporter
 
