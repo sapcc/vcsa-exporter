@@ -1,6 +1,7 @@
 import json
 import master_password
 
+
 class Vcenter:
     def __init__(self, atlasfile, mpw, user, password=None):
         self.vcenter_list = list()

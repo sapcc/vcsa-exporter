@@ -1,6 +1,9 @@
 from prometheus_client.core import GaugeMetricFamily
 from BaseCollector import BaseCollector
 from modules.Connection import Connection
+import logging
+
+LOG = logging.getLogger('vcsa-exporter')
 
 
 class VmonCollector(BaseCollector):
@@ -29,15 +32,14 @@ class VmonCollector(BaseCollector):
             # TODO: move session handling to base class. implement reuse of sessions
             session_id = Connection.login(vc, self.vcenter.user, self.vcenter.generate_pw(vc))
             if not session_id:
-                print("skipping vc", vc, ", login not possible")
+                LOG.warning(f"skipping vc {vc} login not possible")
                 continue
             fetched_data = Connection.get_request(vc, api_target, session_id)
             Connection.logout(vc, session_id)
             if not fetched_data:
-                print("skipping vc", vc, "fetched data did not return anything")
+                LOG.warning(f"skipping vc {vc} fetched data did not return anything")
                 continue
 
-            services = dict()
             for service in fetched_data['value']:
                 service_name = service['key']
                 state = service['value']['state']
