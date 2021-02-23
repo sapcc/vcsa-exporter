@@ -4,7 +4,7 @@ import master_password
 
 
 class Vcenter:
-    def __init__(self, name, atlasfile, mpw, user, password=None):
+    def __init__(self, name, mpw, user, password=None):
         self.user = user
         self.mpw = mpw
         self.pw = password
