@@ -26,7 +26,7 @@ class LoggingCollector(BaseCollector):
         rest_yaml = BaseCollector.read_rest_yaml()
         api_target = rest_yaml['logging']['api_target']
         action = rest_yaml['logging']['action']
-        fetched_data = Connection.post_request(vc.name, api_target, action, vc.session_id)
+        fetched_data = vc.con.post_request(api_target, action)
         vc.logout()
         if not fetched_data:
             LOG.debug(f"Skipping vc {vc.name} fetched data did not return anything")

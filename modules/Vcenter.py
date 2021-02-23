@@ -4,13 +4,13 @@ import master_password
 
 
 class Vcenter:
-    def __init__(self, name, mpw, user, password=None):
+    def __init__(self, name, mpw, user, password):
         self.user = user
         self.mpw = mpw
         self.pw = password
         if not password:
             self.pw_handle = self.generate_pw_handle()
-        self.session_id = None
+            self.pw = self.generate_pw(name)
         self.name = name
 
     @staticmethod
@@ -33,8 +33,9 @@ class Vcenter:
         return self.pw_handle.password(url)
 
     def login(self):
-        self.session_id = Connection.login(self.name, self.user, self.generate_pw(self.name))
+        self.con = Connection(self)
+        self.con.login()
 
     def logout(self):
-        if self.session_id:
-            Connection.logout(self.name, self.session_id)
+        if self.con.session_id:
+            self.con.logout()

@@ -21,7 +21,7 @@ class BaseCollector(ABC):
         threads = list()
         for vc in self.all_vcenters:
             vc.login()
-            if not vc.session_id:
+            if not vc.con.session_id:
                 LOG.warning(f"Skipping {vc.name}, did not receive any session id")
                 continue
             thread = Thread(target=self.fetch_collector_data, args=(vc,))

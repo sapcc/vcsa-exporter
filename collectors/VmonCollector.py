@@ -28,10 +28,7 @@ class VmonCollector(BaseCollector):
 
         api_target = rest_yaml['vmonservice']['api_target']
 
-        if not vc.session_id:
-            LOG.warning(f"skipping vc {vc.name} login not possible")
-            return
-        fetched_data = Connection.get_request(vc.name, api_target, vc.session_id)
+        fetched_data = vc.con.get_request(api_target)
         vc.logout()
         if not fetched_data:
             LOG.warning(f"skipping vc {vc.name} fetched data did not return anything")
@@ -46,5 +43,4 @@ class VmonCollector(BaseCollector):
                 service_health = service['value']['health']
 
             g.add_metric(labels=[service_name, vc.name], value=self.health_states[service_health])
-        vc.logout()
         self.metrics.append(g)
