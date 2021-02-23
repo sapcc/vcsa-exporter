@@ -26,9 +26,8 @@ class LoggingCollector(BaseCollector):
         rest_yaml = BaseCollector.read_rest_yaml()
         api_target = rest_yaml['logging']['api_target']
         action = rest_yaml['logging']['action']
-        # session_id = Connection.login(vc, self.vcenter.user, self.vcenter.generate_pw(vc))
         fetched_data = Connection.post_request(vc.name, api_target, action, vc.session_id)
-        # Connection.logout(vc, session_id)
+        vc.logout()
         if not fetched_data:
             LOG.debug(f"Skipping vc {vc.name} fetched data did not return anything")
             return
@@ -38,5 +37,4 @@ class LoggingCollector(BaseCollector):
             state = loghost['state']
             g.add_metric(labels=[loghost_name, vc.name],
                          value=self.connection_states[state])
-        vc.logout()
         self.metrics.append(g)

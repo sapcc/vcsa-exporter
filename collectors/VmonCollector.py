@@ -28,12 +28,11 @@ class VmonCollector(BaseCollector):
 
         api_target = rest_yaml['vmonservice']['api_target']
 
-        # session_id = Connection.login(vc, self.vcenter.user, self.vcenter.generate_pw(vc))
         if not vc.session_id:
             LOG.warning(f"skipping vc {vc.name} login not possible")
             return
         fetched_data = Connection.get_request(vc.name, api_target, vc.session_id)
-        # Connection.logout(vc, session_id)
+        vc.logout()
         if not fetched_data:
             LOG.warning(f"skipping vc {vc.name} fetched data did not return anything")
             return
