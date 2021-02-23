@@ -1,7 +1,6 @@
 from urllib3 import disable_warnings
 from urllib3 import exceptions
 import requests
-import os
 import logging
 
 LOG = logging.getLogger('vcsa-exporter')
@@ -21,6 +20,7 @@ class Connection:
             return response.json()['value']
         else:
             LOG.warning(f"Problem logging into {target}: {response.text}")
+            return False
 
     def get_request(target, key, session_id):
         disable_warnings(exceptions.InsecureRequestWarning)

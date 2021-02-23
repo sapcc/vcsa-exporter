@@ -5,7 +5,6 @@ from prometheus_client.core import REGISTRY
 from collectors.VmonCollector import VmonCollector
 from modules.Vcenter import Vcenter
 from collectors.LoggingCollector import LoggingCollector
-import os
 import time
 import logging
 
@@ -47,8 +46,8 @@ def parse_params(logger):
 
 def run_prometheus_server(port, vcenter):
     start_http_server(int(port))
-    REGISTRY.register(VmonCollector(vcenter))
-    REGISTRY.register(LoggingCollector(vcenter))
+    REGISTRY.register(VmonCollector(all_vcenters))
+    REGISTRY.register(LoggingCollector(all_vcenters))
     while True:
         time.sleep(1)
 
@@ -56,6 +55,8 @@ def run_prometheus_server(port, vcenter):
 if __name__ == '__main__':
     logger = logging.getLogger('vcsa-exporter')
     options = parse_params(logger)
-    vcenter = Vcenter(options.atlas, options.master_password, options.user, password=options.password)
-    vcenter.get_vcs_from_atlas()
-    run_prometheus_server(options.port, vcenter)
+    all_vcenters = list()
+    for vcenter in Vcenter.get_vcs_from_atlas(options.atlas):
+        all_vcenters.append(Vcenter(vcenter, options.atlas, options.master_password,
+                                    options.user, password=options.password))
+    run_prometheus_server(options.port, all_vcenters)
