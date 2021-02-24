@@ -48,7 +48,9 @@ class Connection:
     def post_request(self, key, data):
         disable_warnings(exceptions.InsecureRequestWarning)
         LOG.debug(f"request {self.target} {key}")
-        url = "https://" + self.target + "/rest/" + key + '?' + data
+        url = "https://" + self.target + "/rest/" + key
+        try:
+           response = requests.post(url, verify=False, data=data, headers={"vmware-api-session-id": session_id})	            
         try:
             response = requests.post(url, verify=False,
                                      headers={"vmware-api-session-id": self.session_id})
