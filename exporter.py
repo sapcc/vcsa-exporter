@@ -55,8 +55,5 @@ def run_prometheus_server(port, vcenter):
 if __name__ == '__main__':
     logger = logging.getLogger('vcsa-exporter')
     options = parse_params(logger)
-    all_vcenters = list()
-    for vcenter in Vcenter.get_vcs_from_atlas(options.atlas):
-        all_vcenters.append(Vcenter(vcenter, options.master_password,
-                                    options.user, password=options.password))
+all_vcenters = [Vcenter(vcenter, options.master_password, options.user, password=options.password) for vcenter in Vcenter.get_vcs_from_atlas(options.atlas)]
     run_prometheus_server(options.port, all_vcenters)
