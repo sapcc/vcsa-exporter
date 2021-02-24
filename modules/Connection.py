@@ -2,6 +2,7 @@ from urllib3 import disable_warnings
 from urllib3 import exceptions
 import requests
 import logging
+import json
 
 LOG = logging.getLogger('vcsa-exporter')
 
@@ -16,7 +17,7 @@ class Connection:
     def login(self):
         disable_warnings(exceptions.InsecureRequestWarning)
         LOG.debug(f"login {self.target}")
-        url = "https://" + self.target + "/rest/com/vmware/cis/session"
+        url = f"https://{self.target}/rest/com/vmware/cis/session"
         try:
             response = requests.post(url, auth=(self.user, self.pw), verify=False)
         except Exception as e:
@@ -32,7 +33,7 @@ class Connection:
     def get_request(self, key):
         disable_warnings(exceptions.InsecureRequestWarning)
         LOG.debug(f"request {self.target}, {key}")
-        url = "https://" + self.target + "/rest/" + key
+        url = f"https://{self.target}/rest/{key}"
         try:
             response = requests.get(url, verify=False,
                                     headers={"vmware-api-session-id": self.session_id})
@@ -48,9 +49,7 @@ class Connection:
     def post_request(self, key, data):
         disable_warnings(exceptions.InsecureRequestWarning)
         LOG.debug(f"request {self.target} {key}")
-        url = "https://" + self.target + "/rest/" + key
-        try:
-           response = requests.post(url, verify=False, data=data, headers={"vmware-api-session-id": session_id})	            
+        url = f"https://{self.target}/rest/{key}?{data}"
         try:
             response = requests.post(url, verify=False,
                                      headers={"vmware-api-session-id": self.session_id})
@@ -66,7 +65,7 @@ class Connection:
     def logout(self):
         disable_warnings(exceptions.InsecureRequestWarning)
         LOG.debug(f"Logout {self.target} {self.session_id}")
-        url = "https://" + self.target + "/rest/com/vmware/cis/session"
+        url = f"https://{self.target}/rest/com/vmware/cis/session"
         try:
             response = requests.delete(url, verify=False,
                                        headers={"vmware-api-session-id": self.session_id})
