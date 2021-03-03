@@ -10,7 +10,7 @@ class Vcenter:
         self.pw = password
         if not password:
             self.pw_handle = self.generate_pw_handle()
-            self.pw = self.generate_pw(name)
+            self.pw = self.generate_pw(name).replace('/', '')
         self.name = name
 
     @staticmethod
