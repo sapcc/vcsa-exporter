@@ -7,7 +7,6 @@ from gevent.pywsgi import WSGIServer
 
 class MockServer:
     def __init__(self, port=443):
-        super().__init__()
         self.app = Flask(__name__)
         self.port = port
         self.register_blueprints()
