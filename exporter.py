@@ -44,10 +44,10 @@ def parse_params(logger):
     return options
 
 
-def run_prometheus_server(port, vcenter):
+def run_prometheus_server(port, vcenters):
     start_http_server(int(port))
-    REGISTRY.register(VmonCollector(all_vcenters))
-    REGISTRY.register(LoggingCollector(all_vcenters))
+    REGISTRY.register(VmonCollector(vcenters))
+    REGISTRY.register(LoggingCollector(vcenters))
     while True:
         time.sleep(1)
 
