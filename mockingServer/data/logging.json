@@ -1,15 +1,15 @@
 {
     "value": [
         {
-            "hostname": "host.sap.com",
+            "hostname": "host1.vcsa.com",
             "state": "UP"
         },
         {
-            "hostname": "host.sap.com",
+            "hostname": "host2.vcsa.com",
             "state": "UNKNOWN"
         },
         {
-            "hostname": "host.sap.com",
+            "hostname": "host3.vcsa.com",
             "state": "UP"
         }
     ]
