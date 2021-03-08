@@ -4,3 +4,5 @@ requests
 pyyaml
 master_password
 scrypt
+flask
+gevent
