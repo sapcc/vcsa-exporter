@@ -1,0 +1,9 @@
+[
+  {
+    "labels":
+    {
+      "job": "vcenter",
+      "server_name": "localhost"
+    }
+  }
+]

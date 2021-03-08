@@ -1,0 +1,16 @@
+{
+    "value": [
+        {
+            "hostname": "host.sap.com",
+            "state": "UP"
+        },
+        {
+            "hostname": "host.sap.com",
+            "state": "UNKNOWN"
+        },
+        {
+            "hostname": "host.sap.com",
+            "state": "UP"
+        }
+    ]
+}
