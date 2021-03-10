@@ -10,7 +10,8 @@ class Authentication(RequestHandler):
         super().__init__()
         self.username = "Mocking"
         self.mpw = "Server"
-        self.password = master_password.MPW(self.username, self.mpw).password('localhost').replace('/', '')
+        self.url = '127.0.0.1'
+        self.password = master_password.MPW(self.username, self.mpw).password(self.url).replace('/', '')
 
     def post(self):
         if not self.login():

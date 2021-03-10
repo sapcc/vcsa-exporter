@@ -9,7 +9,7 @@ class VmonService(RequestHandler):
     def get(self):
         if not self.check_session_id():
             return make_response('sessionID check failed', 401)
-        with open("../mockingServer/data/vmon.json", 'r') as data:
+        with open("mockingServer/data/vmon.json", 'r') as data:
             response = json.load(data)
         return response
 

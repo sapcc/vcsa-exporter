@@ -18,6 +18,9 @@ class MockServer:
 
     def start_server(self):
         self.server = WSGIServer(('localhost', 443), self.app,
-                                 keyfile='../mockingServer/certs/cert.key',
-                                 certfile='../mockingServer/certs/cert.cert')
+                                 keyfile='mockingServer/certs/cert.key',
+                                 certfile='mockingServer/certs/cert.cert')
         self.server.serve_forever()
+
+    def stop_server(self):
+        self.server.stop()

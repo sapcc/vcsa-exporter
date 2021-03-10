@@ -5,7 +5,7 @@ import json
 
 class RequestHandler(MethodView):
     def __init__(self):
-        with open('../mockingServer/data/login.json', 'r') as data:
+        with open('mockingServer/data/login.json', 'r') as data:
             self.session_id = json.load(data)
 
     def check_session_id(self):

@@ -1,36 +1,32 @@
 import pytest
-from tests.ServerSetup import ServerSetup
+from tests.conftest import ServerSetup
 from modules.Vcenter import Vcenter
 from modules.Connection import Connection
 
 
-class TestAuthorization(ServerSetup):
+class TestAuthentication(ServerSetup):
     args = (
-        "host, pw, user, mpw",
+        "host, mpw, user, pw",
         [
             pytest.param(
-                'False', None, 'Mocking', 'Nula8.VeyuCaru'
+                'False', 'Server', 'Mocking', None
             ),
             pytest.param(
-                '127.0.0.1', None, 'False', 'Nula8.VeyuCaru'
+                '127.0.0.1', 'False', 'Mocking', None
             ),
             pytest.param(
-                '127.0.0.1', None, 'Mocking', 'False'
+                '127.0.0.1', 'Server', 'False', None
             )
         ]
     )
-
-    @pytest.fixture
-    def setup_testcase(self):
-        self.vcenter = Vcenter('127.0.0.1', None, 'Mocking', 'Nula8.VeyuCaru')
 
     def test_login_success(self, setup_testcase):
         self.vcenter.login()
         assert self.vcenter.con.session_id == 'MockServerSessionID'
 
     @pytest.mark.parametrize(*args)
-    def test_login_failure(self, host, pw, user, mpw):
-        vcenter = Vcenter(host, pw, user, mpw)
+    def test_login_failure(self, host, mpw, user, pw):
+        vcenter = Vcenter(host, mpw, user, pw)
         connection = Connection(vcenter)
         response = connection.login()
         assert response is False
@@ -41,8 +37,8 @@ class TestAuthorization(ServerSetup):
         assert response is None
 
     @pytest.mark.parametrize(*args)
-    def test_logout_failure(self, host, pw, user, mpw):
-        vcenter = Vcenter(host, pw, user, mpw)
+    def test_logout_failure(self, host, mpw, user, pw):
+        vcenter = Vcenter(host, mpw, user, pw)
         connection = Connection(vcenter)
         response = connection.logout()
-        assert response is False
+        assert response is False or response is None
