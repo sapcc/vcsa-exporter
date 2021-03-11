@@ -2,7 +2,7 @@ import requests
 import yaml
 
 
-class TestGeneralOutput:
+class TestMetricOutput:
     def test_vcsa_data_comparison(self, setup_vcsa_url):
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
@@ -18,8 +18,15 @@ class TestGeneralOutput:
         setup_vcenter.name = 'false'
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
-        assert len(metrics) != 0
         setup_vcenter.name = request.config.getoption('--host')
+        assert len(metrics) == 0
+
+    def test_consecutive_runs(self, setup_vcsa_url):
+        max_size = len(requests.get(setup_vcsa_url).text)
+        content_size = max_size
+        for run in range(0, 2):
+            content_size = len(requests.get(setup_vcsa_url).text)
+        assert content_size == max_size
 
     def process_response_data(self, response):
         results = response.text.split('\n')

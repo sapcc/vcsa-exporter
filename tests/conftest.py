@@ -1,8 +1,8 @@
-import pytest
-from threading import Thread
 from mockingServer.MockServer import MockServer
 from modules.Vcenter import Vcenter
 from exporter import run_prometheus_server
+import pytest
+from threading import Thread
 
 
 def pytest_addoption(parser):
@@ -48,9 +48,31 @@ def setup_vcsa_thread(setup_vcenter, request):
 
 @pytest.fixture(scope='session')
 def setup_vcsa_url(request):
-    """To reduce maintenance we forge a prometheus URL for the tests."""
+    """To reduce maintenance we forge a VCSA URL for the tests."""
 
     ip = request.config.getoption('--host')
     port = request.config.getoption('--prometheusport')
     vcsa_url = 'http://' + ip + ':' + port
     yield vcsa_url
+
+
+@pytest.fixture(scope='session')
+def param():
+    """The param fixture allows us to pass all parameters from pytest_generate_tests to the target tests."""
+
+    pass
+
+
+def pytest_generate_tests(metafunc):
+    """Parametrize testcases. These can be reused if the testcase implements the parameters listed below"""
+
+    host = metafunc.config.getoption('--host')
+    mpw = metafunc.config.getoption('--mpw')
+    user = metafunc.config.getoption('--user')
+
+    if 'param' in metafunc.fixturenames:
+        metafunc.parametrize("host, mpw, user, pw", [
+            pytest.param('False', mpw, user, None),
+            pytest.param(host, 'False', user, None),
+            pytest.param(host, mpw, 'False', None)
+        ])
