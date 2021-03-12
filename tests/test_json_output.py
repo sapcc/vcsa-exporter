@@ -6,7 +6,7 @@ import yaml
 
 
 @pytest.fixture(scope='class')
-def bc_yaml():
+def rest_yaml():
     bc_data = BaseCollector.read_rest_yaml()
     yield bc_data
 
