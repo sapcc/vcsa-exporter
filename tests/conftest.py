@@ -1,8 +1,11 @@
 from mockingServer.MockServer import MockServer
+from mockingServer.modules.RequestHandler import RequestHandler
 from modules.Vcenter import Vcenter
 from exporter import run_prometheus_server
 import pytest
 from threading import Thread
+import json
+import yaml
 
 
 def pytest_addoption(parser):
@@ -54,6 +57,41 @@ def setup_vcsa_url(request):
     port = request.config.getoption('--prometheusport')
     vcsa_url = 'http://' + ip + ':' + port
     yield vcsa_url
+
+
+@pytest.fixture(scope='class')
+def session_id():
+    """Provides the MockSessionID for the testcases"""
+
+    mock_session_id = RequestHandler().session_id['value']
+    yield mock_session_id
+
+
+@pytest.fixture(scope='class')
+def rest_yaml():
+    """Provides the rest.yaml data from the BaseCollector class for the testcases."""
+
+    with open('./rest.yaml') as yaml_file:
+        bc_data = yaml.safe_load(yaml_file)
+    yield bc_data
+
+
+@pytest.fixture(scope='class')
+def vmon_json():
+    """Provides the vcenter (vmon) json data for the testcases."""
+
+    with open("mockingServer/data/vmon.json", 'r') as data:
+        vmon_data = json.load(data)
+    yield vmon_data
+
+
+@pytest.fixture(scope='class')
+def logging_json():
+    """Provides the vcenter (logging) json data for the testcases"""
+
+    with open("mockingServer/data/logging.json", 'r') as data:
+        logging_data = json.load(data)
+    yield logging_data
 
 
 @pytest.fixture(scope='session')

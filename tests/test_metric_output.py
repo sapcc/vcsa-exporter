@@ -7,7 +7,7 @@ class TestMetricOutput:
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
 
-        with open('tests/vcsa_output_comparison.yaml', 'r') as fp:
+        with open('mockingServer/data/vcsa_output_comparison.yaml', 'r') as fp:
             comparison_data = yaml.safe_load(fp)
 
         for key in comparison_data.keys():

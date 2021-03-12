@@ -1,14 +1,6 @@
 from modules.Vcenter import Vcenter
 from modules.Connection import Connection
-from mockingServer.modules.RequestHandler import RequestHandler
-import pytest
 import requests
-
-
-@pytest.fixture(scope='class')
-def session_id():
-    mock_session_id = RequestHandler().session_id['value']
-    yield mock_session_id
 
 
 class TestConnection:
