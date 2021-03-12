@@ -40,15 +40,15 @@ def setup_vcsa_thread(setup_vcenter, request):
     """The VCSA Exporter will be startet as a thread."""
 
     port = request.config.getoption('--prometheusport')
-    vcenter_list = [setup_vcenter]
-    thread = Thread(target=run_prometheus_server, args=(port, vcenter_list))
+    thread = Thread(target=run_prometheus_server, args=(port, [setup_vcenter]))
     thread.daemon = True
     thread.start()
 
 
 @pytest.fixture(scope='session')
 def setup_vcsa_url(request):
-    """To reduce maintenance we forge a VCSA URL for the tests."""
+    """To avoid changing the URL throughout the testcases on changing parameters,
+    we create a VCSA URL upfront."""
 
     ip = request.config.getoption('--host')
     port = request.config.getoption('--prometheusport')

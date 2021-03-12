@@ -9,7 +9,7 @@ class LoggingService(RequestHandler):
     def post(self):
         if not self.check_session_id():
             return make_response('sessionID check failed', 401)
-        with open('mockingServer/data/logging.json') as data:
+        with open('mockingServer/data/logging.json', 'r') as data:
             response = json.load(data)
         return response
 

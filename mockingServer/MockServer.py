@@ -17,10 +17,6 @@ class MockServer:
         self.app.register_blueprint(loggingBluePrint, url_prefix='/rest')
 
     def start_server(self):
-        self.server = WSGIServer(('localhost', 443), self.app,
-                                 keyfile='mockingServer/certs/cert.key',
-                                 certfile='mockingServer/certs/cert.cert')
-        self.server.serve_forever()
-
-    def stop_server(self):
-        self.server.stop()
+        WSGIServer(('localhost', self.port), self.app,
+                   keyfile='mockingServer/certs/cert.key',
+                   certfile='mockingServer/certs/cert.cert').serve_forever()
