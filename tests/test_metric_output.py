@@ -15,7 +15,7 @@ class TestMetricOutput:
             assert len(difference) == 0
 
     def test_vcenter_backend_down(self, request, setup_vcsa_url, setup_vcenter):
-        setup_vcenter.name = 'false'
+        setup_vcenter.name = 'foobar-vcenter.whatever.domain'
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
         setup_vcenter.name = request.config.getoption('--host')
