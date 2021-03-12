@@ -33,7 +33,7 @@ class TestMetricOutput:
         metrics = set()
 
         for entry in results:
-            if entry.startswith('vcsa_service_status') or entry.startswith('vcsa_logging_status'):
+            if entry.startswith(('vcsa_service_status', 'vcsa_logging_status')):
                 metrics.add(entry)
 
         return metrics
