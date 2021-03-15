@@ -25,7 +25,7 @@ class TestMetricOutput:
         setup_vcenter.name = request.config.getoption('--host')
         assert len(metrics) == 0, 'If the backend is down, no vcsa service metrics are expected'
         # Backend up test
-        self.backend_up(setup_vcsa_url)
+        metrics = self.backend_up(setup_vcsa_url)
         assert len(metrics) > 0, 'If the backend is up after it was down, vcsa service metrics are expected'
 
     def test_consecutive_runs(self, setup_vcsa_url):
