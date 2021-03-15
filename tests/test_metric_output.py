@@ -3,7 +3,7 @@ import yaml
 
 
 class TestMetricOutput:
-    def test_vcsa_data_comparison(self, setup_vcsa_url):
+    def test_prometheus_server_reply(self, setup_vcsa_url):
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
 
@@ -12,21 +12,26 @@ class TestMetricOutput:
 
         for key in comparison_data.keys():
             difference = set(comparison_data[key]).difference(metrics)
-            assert len(difference) == 0
+            assert len(difference) == 0, 'No difference between the metric dump and the Prometheus reply expected.'
 
     def test_vcenter_backend_down(self, request, setup_vcsa_url, setup_vcenter):
         setup_vcenter.name = 'foobar-vcenter.whatever.domain'
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
         setup_vcenter.name = request.config.getoption('--host')
-        assert len(metrics) == 0
+        assert len(metrics) == 0, 'If the backend is down, no vcsa service metrics are expected'
+
+    def test_vcenter_backend_up(self, request, setup_vcsa_url):
+        response = requests.get(setup_vcsa_url)
+        metrics = self.process_response_data(response)
+        assert len(metrics) != 0, 'If the backend is up, vcsa service metrics are expected'
 
     def test_consecutive_runs(self, setup_vcsa_url):
         max_size = len(requests.get(setup_vcsa_url).text)
         content_size = max_size
         for run in range(0, 2):
             content_size = len(requests.get(setup_vcsa_url).text)
-        assert content_size == max_size
+        assert content_size == max_size, 'At consecutive runs there is no additional response data expected.'
 
     def process_response_data(self, response):
         results = response.text.split('\n')

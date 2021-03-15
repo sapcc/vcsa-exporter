@@ -92,25 +92,3 @@ def logging_json():
     with open("mockingServer/data/logging.json", 'r') as data:
         logging_data = json.load(data)
     yield logging_data
-
-
-@pytest.fixture(scope='session')
-def param():
-    """The param fixture allows us to pass all parameters from pytest_generate_tests to the target tests."""
-
-    pass
-
-
-def pytest_generate_tests(metafunc):
-    """Parametrize testcases. These can be reused if the testcase implements the parameters listed below"""
-
-    host = metafunc.config.getoption('--host')
-    mpw = metafunc.config.getoption('--mpw')
-    user = metafunc.config.getoption('--user')
-
-    if 'param' in metafunc.fixturenames:
-        metafunc.parametrize("host, mpw, user, pw", [
-            pytest.param('False', mpw, user, None),
-            pytest.param(host, 'False', user, None),
-            pytest.param(host, mpw, 'False', None)
-        ])
