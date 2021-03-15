@@ -1,6 +1,6 @@
 import requests
 import yaml
-
+import pytest
 
 class TestMetricOutput:
     def test_prometheus_server_reply(self, setup_vcsa_url):
@@ -16,7 +16,8 @@ class TestMetricOutput:
 
     def test_backend_recovery_from_down(self, request, setup_vcsa_url, setup_vcenter):
         # Backend up test
-        self.backend_up(setup_vcsa_url)
+        metrics = self.backend_up(setup_vcsa_url)
+        assert len(metrics) > 0, 'If the backend is up, vcsa service metrics are expected'
         # Backend down test
         setup_vcenter.name = 'foobar-vcenter.whatever.domain'
         response = requests.get(setup_vcsa_url)
@@ -25,6 +26,7 @@ class TestMetricOutput:
         assert len(metrics) == 0, 'If the backend is down, no vcsa service metrics are expected'
         # Backend up test
         self.backend_up(setup_vcsa_url)
+        assert len(metrics) > 0, 'If the backend is up after it was down, vcsa service metrics are expected'
 
     def test_consecutive_runs(self, setup_vcsa_url):
         max_size = len(requests.get(setup_vcsa_url).text)
@@ -37,7 +39,7 @@ class TestMetricOutput:
     def backend_up(self, setup_vcsa_url):
         response = requests.get(setup_vcsa_url)
         metrics = self.process_response_data(response)
-        assert len(metrics) > 0, 'If the backend is up, vcsa service metrics are expected'
+        return metrics
 
     def process_response_data(self, response):
         results = response.text.split('\n')
