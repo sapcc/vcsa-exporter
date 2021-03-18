@@ -1,6 +1,4 @@
-from modules.Vcenter import Vcenter
 from modules.Connection import Connection
-import pytest
 import requests
 
 

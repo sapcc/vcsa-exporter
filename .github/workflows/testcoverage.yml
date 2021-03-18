@@ -1,0 +1,43 @@
+name: testcoverage
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  VCSA-Exporter_testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          # The Prometheus Server queries against Port 443 against the mocking server.
+          # Therefore the commands need to be executed with root privileges.
+          sudo python -m pip install --upgrade pip
+          pip install flake8
+          if [ -f requirements.txt ]; then sudo pip install -r requirements.txt; fi
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          # count: print total number of errors and warnings
+          # select: linting coverage can be looked up in the flake8 documentaiton.
+          # show-source: show the source generate each error or warning.
+          # statistics: cumulated number of errors and warnings are printed.
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+          # Other flake lints won't stop the build process
+          # count: print total number of errors and warnings
+          # exit-zero: exit flake8 with status code 0 even if there are errors.
+          # max-complexity: Cyclomatic complexity (McCabe), the number of linearly independent paths in the code.
+          # max-line-length: The GitHub editor is 127 chars wide.
+          # statistics: cumulated number of errors and warnings are printed.
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        run: |
+          sudo python -m pytest -v --tb=no --no-header --color=yes

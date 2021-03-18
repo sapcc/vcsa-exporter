@@ -2,10 +2,11 @@ from mockingServer.MockServer import MockServer
 from mockingServer.modules.RequestHandler import RequestHandler
 from modules.Vcenter import Vcenter
 from exporter import run_prometheus_server
-import pytest
 from threading import Thread
+import pytest
 import json
 import yaml
+import time
 
 
 def pytest_addoption(parser):
@@ -46,6 +47,8 @@ def setup_vcsa_thread(setup_vcenter, request):
     thread = Thread(target=run_prometheus_server, args=(port, [setup_vcenter]))
     thread.daemon = True
     thread.start()
+    # For the CI runner we need to wait a short period of time to boot up the Prometheus server properly.
+    time.sleep(0.1)
 
 
 @pytest.fixture(scope='session')
@@ -92,3 +95,10 @@ def logging_json():
     with open("mockingServer/data/logging.json", 'r') as data:
         logging_data = json.load(data)
     yield logging_data
+
+
+def pytest_runtest_logreport(report):
+    """The CI runner has a limited character output on screen. Therefore the location string of tests will
+    be limited. AssertionErrors will then be visible at the console."""
+
+    report.nodeid = ''
