@@ -1,6 +1,6 @@
 import requests
 import yaml
-import pytest
+
 
 class TestMetricOutput:
     def test_prometheus_server_reply(self, setup_vcsa_url):
