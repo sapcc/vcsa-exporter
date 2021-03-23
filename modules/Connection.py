@@ -2,7 +2,6 @@ from urllib3 import disable_warnings
 from urllib3 import exceptions
 import requests
 import logging
-import json
 
 LOG = logging.getLogger('vcsa-exporter')
 
@@ -73,6 +72,7 @@ class Connection:
             LOG.error(f"Problem deleting session for {self.target}: {str(e)}")
             return False
         if response.status_code == 200:
-            return
+            return True
         else:
             LOG.warning(f"Problem logging out, getting return of {self.target} {self.session_id}: {response.text}")
+            return False

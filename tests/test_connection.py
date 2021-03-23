@@ -14,6 +14,7 @@ class TestConnection:
 
     def test_logout_success(self, setup_vcenter):
         connection = Connection(setup_vcenter)
+        connection.login()
         response = connection.logout()
         assert response is True, 'Expected the response "True" for a successful logout.'
 
@@ -25,6 +26,6 @@ class TestConnection:
 
     def test_logout_failure(self, setup_vcenter):
         connection = Connection(setup_vcenter)
-        connection.pw = 'False'
+        connection.session_id = 'False'
         response = connection.logout()
         assert response is False, 'Expected the response "False" for a failed logout.'

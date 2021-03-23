@@ -19,7 +19,9 @@ class Authentication(RequestHandler):
         return self.session_id
 
     def delete(self):
-        return make_response('Success', 200)
+        if not self.check_session_id():
+            return make_response('Logout failed', 401)
+        return make_response('Logout success', 200)
 
     def login(self):
         auth = request.authorization
