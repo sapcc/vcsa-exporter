@@ -7,7 +7,6 @@ class RequestHandler(MethodView):
         self.session_id = {'value': '779b8ede-1337-11eb-9581-3c58c27e75a6'}
 
     def check_session_id(self):
-        x = request.headers.environ['HTTP_VMWARE_API_SESSION_ID']
         if request.headers.environ['HTTP_VMWARE_API_SESSION_ID'] != self.session_id['value']:
             return False
         return True
