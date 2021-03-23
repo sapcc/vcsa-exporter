@@ -1,4 +1,4 @@
-name: testcoverage
+name: Integration test
 on:
   push:
     branches:
