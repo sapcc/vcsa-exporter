@@ -29,10 +29,12 @@ class TestMetricOutput:
         assert len(metrics) > 0, 'If the backend is up after it was down, vcsa service metrics are expected'
 
     def test_consecutive_runs(self, setup_vcsa_url):
-        max_size = len(requests.get(setup_vcsa_url).text)
+        max_size = requests.get(setup_vcsa_url)
+        max_size = len(self.process_response_data(max_size))
         content_size = max_size
         for run in range(0, 2):
-            content_size = len(requests.get(setup_vcsa_url).text)
+            content_size = requests.get(setup_vcsa_url)
+            content_size = len(self.process_response_data(content_size))
         assert content_size == max_size, 'At consecutive runs there is no additional response data expected.'
 
     """Helper methods for this testcase are located below"""

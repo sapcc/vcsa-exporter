@@ -48,7 +48,7 @@ def setup_vcsa_thread(setup_vcenter, request):
     thread.daemon = True
     thread.start()
     # For the CI runner we need to wait a short period of time to boot up the Prometheus server properly.
-    time.sleep(0.1)
+    time.sleep(0.2)
 
 
 @pytest.fixture(scope='session')
