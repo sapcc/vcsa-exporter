@@ -53,6 +53,7 @@ class BaseCollector(ABC):
 
         for metric in self.metrics:
             yield metric
+        self.metrics.clear()
 
     @abstractmethod
     def fetch_collector_data(self, vc):

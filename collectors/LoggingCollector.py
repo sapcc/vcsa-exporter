@@ -1,6 +1,5 @@
 from prometheus_client.core import GaugeMetricFamily
 from BaseCollector import BaseCollector
-from modules.Connection import Connection
 import logging
 
 LOG = logging.getLogger('vcsa-exporter')
