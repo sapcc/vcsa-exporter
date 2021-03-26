@@ -53,6 +53,7 @@ class BaseCollector(ABC):
 
         for metric in self.metrics:
             yield metric
+        # Diese Zeile behebt den Regressionsfehler.
         self.metrics.clear()
 
     @abstractmethod
