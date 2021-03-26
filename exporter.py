@@ -47,7 +47,7 @@ def parse_params(logger):
 def run_prometheus_server(port, vcenters):
     start_http_server(int(port))
     REGISTRY.register(VmonCollector(vcenters))
-    REGISTRY.register(LoggingCollector(vcenters))
+    REGISTRY.register(LoggingCollector(all_vcenters))
     while True:
         time.sleep(1)
 
@@ -55,7 +55,6 @@ def run_prometheus_server(port, vcenters):
 if __name__ == '__main__':
     logger = logging.getLogger('vcsa-exporter')
     options = parse_params(logger)
-    # Wird diese Datei direkt ausgeführt, ist "all_vcenters" über die gesamte Datei verfügbar.
     all_vcenters = [Vcenter(vcenter, options.master_password, options.user, password=options.password)
                     for vcenter in Vcenter.get_vcs_from_atlas(options.atlas)]
     run_prometheus_server(options.port, all_vcenters)
