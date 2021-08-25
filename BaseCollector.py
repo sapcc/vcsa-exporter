@@ -42,6 +42,7 @@ class BaseCollector(ABC):
                 break
             time.sleep(1)
             current_time = time.time()
+            LOG.info(f"Time it finished {current_time}")
         else:
             still_running = [t for t in threads if t[0].is_alive()]
             for running_thread in still_running:
