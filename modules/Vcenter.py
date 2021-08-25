@@ -1,6 +1,7 @@
 from modules.Connection import Connection
 import json
 import master_password
+import re
 
 
 class Vcenter:
