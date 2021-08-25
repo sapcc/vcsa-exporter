@@ -23,7 +23,7 @@ class VmonCollector(BaseCollector):
                               'Status of vCSA Services',
                               labels=['service', 'vccluster'])
         ga = GaugeMetricFamily('collector_data', 'Fetch status of data',
-                              lables=['service', 'vccluster'])
+                              labels=['service', 'vccluster'])
 
         rest_yaml = BaseCollector.read_yaml()
 
