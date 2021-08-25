@@ -23,7 +23,7 @@ class VmonCollector(BaseCollector):
                               'Status of vCSA Services',
                               labels=['service', 'vccluster'])
 
-        rest_yaml = BaseCollector.read_rest_yaml()
+        rest_yaml = BaseCollector.read_yaml()
 
         api_target = rest_yaml['vmonservice']['api_target']
 

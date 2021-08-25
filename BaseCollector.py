@@ -60,7 +60,7 @@ class BaseCollector(ABC):
         pass
 
     @staticmethod
-    def read_rest_yaml():
+    def read_yaml():
         with open('./rest.yaml') as yaml_file:
             rest_yaml = yaml.safe_load(yaml_file)
         return rest_yaml

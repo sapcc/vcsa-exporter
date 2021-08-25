@@ -4,7 +4,7 @@ from BaseCollector import BaseCollector
 
 class TestJsonOuput:
     def test_yaml_read(self, rest_yaml):
-        bc_data = BaseCollector.read_rest_yaml()
+        bc_data = BaseCollector.read_yaml()
         assert rest_yaml == bc_data, 'Identical yaml data expected.'
 
     def test_connection_get(self, setup_vcenter, rest_yaml, vmon_json):
