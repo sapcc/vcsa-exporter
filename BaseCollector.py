@@ -17,6 +17,9 @@ class BaseCollector(ABC):
     def describe(self):
         pass
 
+    def lolablu(self):
+        pass
+
     def collect(self):
         threads = list()
         for vc in self.all_vcenters:
@@ -42,6 +45,7 @@ class BaseCollector(ABC):
                 break
             time.sleep(1)
             current_time = time.time()
+            LOG.info(f"Time it finished {current_time}")
         else:
             still_running = [t for t in threads if t[0].is_alive()]
             for running_thread in still_running:
