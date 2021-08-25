@@ -22,7 +22,7 @@ class LoggingCollector(BaseCollector):
                               'Checks the log forwarding of vCSA. Down: 1 Up: 2 Unknown: 3',
                               labels=['loghost', 'vccluster'])
 
-        rest_yaml = BaseCollector.read_rest_yaml()
+        rest_yaml = BaseCollector.read_yaml()
         api_target = rest_yaml['logging']['api_target']
         action = rest_yaml['logging']['action']
         fetched_data = vc.con.post_request(api_target, action)

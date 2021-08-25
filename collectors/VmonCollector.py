@@ -25,7 +25,7 @@ class VmonCollector(BaseCollector):
         ga = GaugeMetricFamily('collector_data', 'Fetch status of data',
                               lables=['service', 'vccluster']
 
-        rest_yaml = BaseCollector.read_rest_yaml()
+        rest_yaml = BaseCollector.read_yaml()
 
         api_target = rest_yaml['vmonservice']['api_target']
 
