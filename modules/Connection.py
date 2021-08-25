@@ -17,6 +17,7 @@ class Connection:
         disable_warnings(exceptions.InsecureRequestWarning)
         LOG.debug(f"login {self.target}")
         url = f"https://{self.target}/rest/com/vmware/cis/session"
+        LOG.debug(f"url is {url}")
         try:
             response = requests.post(url, auth=(self.user, self.pw), verify=False)
         except Exception as e:
