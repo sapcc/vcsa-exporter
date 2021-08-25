@@ -27,6 +27,7 @@ def parse_params(logger):
     parser.add_option("-a", "--atlas", help="path to atlas config", action="store", dest="atlas")
     parser.add_option("-u", "--user", help="user used with master password", action="store", dest="user")
     parser.add_option("-p", "--password", help="specify password to log in", action="store", dest="password")
+    parser.add_option("-x", "--x", help="specify x", action="store", dest="x")
 
     (options, args) = parser.parse_args()
     if options.debug:
