@@ -47,3 +47,5 @@ We are using [atlas](https://github.com/sapcc/atlas) to have the `vcenter.json` 
 
 A new collector has to go to `collectors/`. Respective API call goes to `rest.yaml`.
 Maybe this is going to be supplemented by some endpoint discovery in future, feel free to add it if you love to have it.
+
+Foo
