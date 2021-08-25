@@ -9,9 +9,9 @@ class LoggingCollector(BaseCollector):
     def __init__(self, all_vcenters):
         super().__init__(all_vcenters)
         self.connection_states = {
-            'UP': 1,
-            'UNKNOWN': 2,
-            'DOWN': 0
+            'UP': 2,
+            'UNKNOWN': 3,
+            'DOWN': 1
         }
 
     def describe(self):
@@ -19,7 +19,7 @@ class LoggingCollector(BaseCollector):
 
     def fetch_collector_data(self, vc):
         g = GaugeMetricFamily('vcsa_logging_status',
-                              'Checks the log forwarding of vCSA. Down: 0 Up: 1 Unknown: 2',
+                              'Checks the log forwarding of vCSA. Down: 1 Up: 2 Unknown: 3',
                               labels=['loghost', 'vccluster'])
 
         rest_yaml = BaseCollector.read_yaml()
