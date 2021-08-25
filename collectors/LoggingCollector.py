@@ -33,6 +33,7 @@ class LoggingCollector(BaseCollector):
 
         for loghost in fetched_data['value']:
             loghost_name = loghost['hostname']
+            foo = "bar"
             state = loghost['state']
             g.add_metric(labels=[loghost_name, vc.name],
                          value=self.connection_states[state])
