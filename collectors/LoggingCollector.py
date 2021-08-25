@@ -15,7 +15,7 @@ class LoggingCollector(BaseCollector):
         }
 
     def describe(self):
-        yield GaugeMetricFamily('vcsa_logging_status', 'Checks the log forwarding of vCSA.')
+        yield GaugeMetricFamily('vcsa_logging_status', 'Checks the log forwarding of vCSAs.')
 
     def fetch_collector_data(self, vc):
         g = GaugeMetricFamily('vcsa_logging_status',
