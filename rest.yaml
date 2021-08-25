@@ -1,5 +1,6 @@
 vmonservice:
    api_target: "appliance/vmon/service"
+   foo_target: "asd"
 logging:
    api_target: "appliance/logging/forwarding"
    action: "action=test"
