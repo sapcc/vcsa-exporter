@@ -1,5 +1,5 @@
 from modules.Connection import Connection
-import json
+import requests
 import master_password
 
 
@@ -14,9 +14,9 @@ class Vcenter:
         self.name = name
 
     @staticmethod
-    def get_vcs_from_atlas(atlasfile):
-        with open(atlasfile) as json_file:
-            netbox_json = json.load(json_file)
+    def get_vcs_from_atlas(atlas):
+        response = requests.get(url=f'http://{atlas}:8080/service_discovery/netbox')
+        netbox_json = response.json()
         vcenter_list = list()
         for target in netbox_json:
             if target['labels']['job'] == "vcenter":
