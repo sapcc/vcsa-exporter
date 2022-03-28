@@ -21,10 +21,12 @@ def parse_params(logger):
     parser.add_option("-o", "--port", help="specify exporter (exporter.py) or inventory serving port(inventory.py)",
                       action="store", dest="port")
     parser.add_option("-d", "--debug", help="enable debug", action="store_true", dest="debug", default=False)
-    parser.add_option("-v", "--verbose", help="log all level but debug", action="store_true", dest="info", default=False)
+    parser.add_option("-v", "--verbose", help="log all level but debug", action="store_true", dest="info",
+                      default=False)
     parser.add_option("-c", "--config", help="path to rest config", action="store", dest="config")
-    parser.add_option("-m", "--master-password", help="master password to decrypt mpw", action="store", dest="master_password")
-    parser.add_option("-a", "--atlas", help="path to atlas config", action="store", dest="atlas")
+    parser.add_option("-m", "--master-password", help="master password to decrypt mpw", action="store",
+                      dest="master_password")
+    parser.add_option("-a", "--atlas", help="path to atlas http service endpoint", action="store", dest="atlas")
     parser.add_option("-u", "--user", help="user used with master password", action="store", dest="user")
     parser.add_option("-p", "--password", help="specify password to log in", action="store", dest="password")
 
