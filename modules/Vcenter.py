@@ -14,8 +14,8 @@ class Vcenter:
         self.name = name
 
     @staticmethod
-    def get_vcs_from_atlas(atlas):
-        response = requests.get(url=f'http://{atlas}:8080/service_discovery/netbox')
+    def get_vcs_from_atlas(atlas_endpoint):
+        response = requests.get(url=atlas_endpoint)
         netbox_json = response.json()
         vcenter_list = list()
         for target in netbox_json:
