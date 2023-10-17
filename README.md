@@ -1,3 +1,5 @@
+# Note: The exporter is no longer maintained
+
 # vcsa-exporter
 
 This is an exporter using [vCenter Server Appliance (Management) API](https://code.vmware.com/apis/60/vcenter-server-appliance-management) via REST. 
